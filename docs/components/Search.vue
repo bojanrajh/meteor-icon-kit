@@ -120,7 +120,7 @@ export default {
   font-size: 16px;
   border: none;
   border-radius: 8px;
-  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 8%)) drop-shadow(0 2px 1px rgba(0, 0, 0, 6%)) drop-shadow(0 1px 3px rgba(0, 0, 0, 10%));
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 8%), 0 2px 1px rgba(0, 0, 0, 6%), 0 1px 3px rgba(0, 0, 0, 10%);
   flex-wrap: wrap;
   gap: 8px;
 }
@@ -137,16 +137,17 @@ export default {
 }
 
 button.active {
-  background-color: #0E1014;
+  background: -webkit-linear-gradient(left,#017bff 15%,#01cfff,#017bff);
   color: #fff;
+  /*  background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;*/
 }
 
-button#regular {
-  border-radius: 4px 0 0 4px;
-}
-
+button#regular,
 button#solid {
-  border-radius: 0 4px 4px 0;
+  border-radius: 4px;
+  font-weight: 700;
 }
 
 p#copy-hint {
