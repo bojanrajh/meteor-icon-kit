@@ -10,17 +10,15 @@
     <div class="search-bar">
       <input class="form-control" name="searchbar" type="text" @input="debounceInput" placeholder="Search icons..."/>
 
-      <button id="regular" class="btn" :class="[ regular ? '--primary' : '--secondary' ]" aria-label="Regular"
-              @click="switchIconModeToRegular">Regular
+      <button id="regular" class="btn" :class="[ mode === 'regular' ? '--primary' : '--secondary' ]" aria-label="Regular"
+              @click="switchMode('regular')">Regular
       </button>
-      <button id="solid" class="btn" :class="[ solid ? '--primary' : '--secondary' ]" aria-label="Solid"
-              @click="switchIconModeToSolid">Solid
+      <button id="solid" class="btn" :class="[ mode === 'solid' ? '--primary' : '--secondary' ]" aria-label="Solid"
+              @click="switchMode('solid')">Solid
       </button>
     </div>
 
-    <p id="copy-hint">Click on any Icon to copy the full icon name to clipboard.</p>
-
-    <SearchResult :phrase="phrase" :regular="regular" :solid="solid"/>
+    <SearchResult :phrase="phrase" :mode="mode" />
   </div>
 </template>
 
@@ -30,8 +28,11 @@ import { ref } from 'vue'
 
 const phrase = ref('');
 const debounce = ref(null);
-const regular = ref(true);
-const solid = ref(false);
+const mode = ref('regular');
+
+const switchMode = newMode => {
+  mode.value = newMode;
+};
 
 const debounceInput = (event) => {
   clearTimeout(debounce.value);
@@ -39,16 +40,6 @@ const debounceInput = (event) => {
   debounce.value = setTimeout(() => {
     phrase.value = event.target.value;
   }, 600)
-}
-
-const switchIconModeToRegular = () => {
-  regular.value = true;
-  solid.value = false;
-}
-
-const switchIconModeToSolid = () => {
-  regular.value = false;
-  solid.value = true;
 }
 </script>
 
@@ -64,11 +55,11 @@ const switchIconModeToSolid = () => {
 }
 
 .search-bar {
+  @apply flex mb-8;
   display: flex;
   justify-content: space-between;
   width: 100%;
-  margin: 20px auto;
-  padding: 10px 45px;
+  padding-left: 45px;
   background: transparent url("/resources/meteor-icon-kit/public/icons/regular/search.svg") no-repeat 15px center;
   background-size: 15px 15px;
   font-size: 16px;
@@ -84,9 +75,5 @@ const switchIconModeToSolid = () => {
 
 .button-group button {
   width: 120px;
-}
-
-p#copy-hint {
-  font-size: 12px;
 }
 </style>
